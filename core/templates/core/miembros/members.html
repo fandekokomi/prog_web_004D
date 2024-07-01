@@ -1,0 +1,201 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block titulo %}<title>Grupo Cero - Panel de Miembros</title>{% endblock %}
+
+{% block navmenuver %}{% endblock %}
+
+{% block navbuscar %}{% endblock %}
+
+{% block navmenu %}{% endblock %}
+
+{% block navcarrito %}{% endblock %}
+
+{% block contenido %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p class="h2 text-center">Filtrar por estado</p>
+            <div class="container text-center">
+                <button class="btn btn-success" onclick="filtrar('A')">Aprobadas</button>
+                <button class="btn btn-warning" onclick="filtrar('E')">En espera</button>
+                <button class="btn btn-danger" onclick="filtrar('R')">Rechazadas</button>
+                <button class="btn btn-secondary" onclick="filtrar('')">Ver todas</button>
+            </div>  
+            <div class="container mt-5 mb-5">
+                <h1 class="text-center">Estado de solicitudes de artistas </h1>                  
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <!-- Lista de solicitudes de productos -->
+                        <ul class="list-group mt-3" style="list-style: none;">
+                            {% for artista in listaA %}
+                                <li class="solicitud {{artista.estado}}">
+                                    <a href="#" class="list-group-item d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#modalSolicitudA{{artista.pk}}">
+                                        #{{ artista.pk }} - {{ artista.nombre_artista }}
+                                        {% if artista.estado == 'E' %}
+                                            <span class="badge bg-warning rounded-pill">{{ artista.get_estado_display }}</span>
+                                        {% endif %}
+                                        {% if artista.estado == 'A' %}
+                                            <span class="badge bg-success rounded-pill">{{ artista.get_estado_display }}</span>
+                                        {% endif %}
+                                        {% if artista.estado == 'R' %}
+                                            <span class="badge bg-danger rounded-pill">{{ artista.get_estado_display }}</span>
+                                        {% endif %}
+                                    </a>
+                                </li>
+                                <!--MODAL-->
+                                <div class="modal" id="modalSolicitudA{{artista.pk}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Solicitud Artista #{{ artista.pk }} - {{ artista.nombre_artista }} </h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                {% if artista.estado == 'A' %}
+                                                        Esta solicitud actualmente se encuentra <strong>{{ artista.get_estado_display }}</strong> por el Administrador.
+                                                    {% elif artista.estado == 'E' %}
+                                                        <p class="text-center"><strong>Detalles:</strong></p>
+                                                        {% if artista.imagen_artista %}
+                                                        <p><strong>Imágen: </strong><img src="{{artista.imagen_artista.url}}" alt="{{artista.nombre_artista}}" style="max-width: 100%;"></p>
+                                                        {% else %}
+                                                        <p><strong>Imágen: </strong>No tiene</p>
+                                                        {% endif %}
+                                                        <p><strong>Nombre: </strong>{{artista.nombre_artista}}</p>
+                                                        <p><strong>Fecha de nacimiento: </strong>{{artista.fecha_nacimiento_artista}}</p>
+                                                        {% if not artista.sitio_web_artista|striptags or artista.sitio_web_artista is None %}
+                                                        <p><strong>Sitio web Artista:</strong> No tiene </p>
+                                                        {%else%}
+                                                        <p><strong>Sitio web Artista:</strong> {{artista.sitio_web_artista}} </p>
+                                                        {%endif%}
+                                                        <p><strong>Biografía: </strong>{{artista.biografia_artista}}</p>
+                                                    {% else %}
+                                                        {% for r in listaRA %}
+                                                        {% if r.solicitudA.pk == artista.pk %}
+                                                        {{r.mensaje_rechazo}}
+                                                        {%endif%}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                            </div>
+                                
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                {% if artista.estado in 'E, R' %}
+                                                <a href="{% url 'editar_solicitud-a' solicitud_id=artista.pk %}" class="btn btn-warning">Editar solicitud</a>
+                                                {% endif %}
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                                            </div>
+                                
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="container mt-5 mb-5">
+                <h1 class="text-center">Estado de solicitudes de productos </h1>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <!-- Lista de solicitudes de productos -->
+                        <ul class="list-group mt-3" style="list-style: none;">
+                            {% for producto in listaP %}
+                                <li class="solicitud {{producto.estado}}">
+                                    <a href="#" class="list-group-item d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#modalSolicitudP{{producto.pk}}">
+                                        #{{ producto.pk }} - {{ producto.nombre_producto }}
+                                        {% if producto.estado == 'E' %}
+                                            <span class="badge bg-warning rounded-pill">{{ producto.get_estado_display }}</span>
+                                        {% endif %}
+                                        {% if producto.estado == 'A' %}
+                                            <span class="badge bg-success rounded-pill">{{ producto.get_estado_display }}</span>
+                                        {% endif %}
+                                        {% if producto.estado == 'R' %}
+                                            <span class="badge bg-danger rounded-pill">{{ producto.get_estado_display }}</span>
+                                        {% endif %}
+                                    </a>
+                                </li>
+                                <!--MODAL-->
+                                <div class="modal" id="modalSolicitudP{{producto.pk}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Solicitud Producto #{{ producto.pk }} - {{ producto.nombre_producto }} </h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                <div class="container justify-content-center">
+                                                    {% if producto.estado == 'A' %}
+                                                        Esta solicitud actualmente se encuentra <strong>{{ producto.get_estado_display }}</strong> por el Administrador.
+                                                    {% elif producto.estado == 'E' %}
+                                                        <p class="text-center"><strong>Detalles:</strong></p>
+                                                        <p><strong>Título: </strong>{{producto.nombre_producto}}</p>
+                                                        {% if producto.imagen_producto %}
+                                                        <p><strong>Imágen: </strong><img src="{{producto.imagen_producto.url}}" alt="{{producto.nombre_producto}}" style="max-width: 100%;"></p>
+                                                        {% else %}
+                                                        <p><strong>Imágen: </strong>No tiene</p>
+                                                        {% endif %}
+                                                        <p><strong>Artista: </strong>{{producto.artista_producto.nombre}}</p>
+                                                        <p><strong>Tipo producto: </strong>{{producto.get_tipo_producto_display}}</p>
+                                                        <p><strong>Precio: </strong>{{producto.precio_producto}}</p>
+                                                        <p><strong>Descripción: </strong>{{producto.descripcion_producto}}</p>
+                                                    {% else %}
+                                                        {% for r in listaRP %}
+                                                        {% if r.solicitudP.pk == producto.pk %}
+                                                        {{r.mensaje_rechazo}}
+                                                        {%endif%}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                {% if producto.estado in 'E, R' %}
+                                                <a href="{% url 'editar_solicitud-p' solicitud_id=producto.pk %}" class="btn btn-warning">Editar solicitud</a>
+                                                {% endif %}
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function filtrar(estado) {
+    var solicitudes = document.getElementsByClassName('solicitud');
+    for (var i = 0; i < solicitudes.length; i++) {
+        if (estado === '' || solicitudes[i].classList.contains(estado)) {
+            solicitudes[i].style.display = '';
+        } else {
+            solicitudes[i].style.display = 'none';
+        }
+    }
+}
+</script> 
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block customfooter %}
+{% endblock %}

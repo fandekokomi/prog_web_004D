@@ -1,0 +1,61 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block titulo %}<title>Grupo Cero - Actualizar artista</title>{% endblock %}
+
+{% block navmenuver %}{% endblock %}
+
+{% block navbuscar %}{% endblock %}
+
+{% block navmenu %}{% endblock %}
+
+{% block navcarrito %}{% endblock %}
+
+{% block contenido %}
+<div class="container">
+    <div class="row text-center justify-content-center">
+        <div class="col-md-6">
+            <a href="{% url 'administradores' %}" class="btn btn-secondary mb-3"><i class="bi bi-arrow-left"></i> Volver al panel de administradores</a>
+            <div class="container my-5">
+                {% load crispy_forms_tags %}
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% if field.name != 'imagen' %}
+                            {{ field|as_crispy_field }}
+                        {% else %}
+                            <p>Imágen Producto</p>
+                            {% if field.value %}
+                                <img id="preview" src="{{ field.value.url }}" alt="Imagen del producto" class="my-5" style="max-width: 50%;">
+                            {% else %}
+                                <img id="preview" src="#" alt="Imagen del producto" class="my-5" style="max-width: 50%; display: none;">
+                            {% endif %}
+                            <input type="file" name="{{ field.name }}" id="id_imagen_producto">
+                        {% endif %}
+                    {% endfor %}
+                    <input class="btn btn-success my-5" type="submit" value="Actualizar">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('id_imagen_producto').onchange = function (event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('preview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    };
+    </script>
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block customfooter %}
+{% endblock %}

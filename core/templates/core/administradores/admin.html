@@ -1,0 +1,148 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block titulo %}<title>Grupo Cero - Panel de solicitudes Admin</title>{% endblock %}
+
+{% block navmenuver %}{% endblock %}
+
+{% block navbuscar %}{% endblock %}
+
+{% block navmenu %}{% endblock %}
+
+{% block navcarrito %}{% endblock %}
+
+{% block contenido %}
+<div class="container">
+    <h1 class="text-center">Panel de Solicitudes para Administrador</h1>
+    <div class="row">
+        <div class="col">
+            <div class="container mt-5 mb-5">
+                <h1 class="text-center">Estado de solicitudes de artistas </h1>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <!-- Lista de solicitudes de productos -->
+                        <ul class="list-group mt-3" style="list-style: none;">
+                            {% for artista in listaA %}
+                                <li>
+                                    <a href="#" class="list-group-item d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#modalSolicitudA{{artista.pk}}">
+                                        #{{ artista.pk }} - {{ artista.nombre_artista }}
+                                        <span class="badge bg-success rounded-pill">Nuevo</span>
+                                    </a>
+                                </li>
+                                <!--MODAL-->
+                                <div class="modal" id="modalSolicitudA{{artista.pk}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Solicitud Artista #{{ artista.pk }} - {{ artista.nombre_artista }} </h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                <h5 class="mb-5">Detalles de la solicitud</h5>
+                                                <p><strong>Usuario:</strong> {{artista.usuario.username}} </p>
+                                                <p><strong>Artista:</strong> {{artista.nombre_artista}} </p>
+                                                {% if artista.fecha_nacimiento_artista %}
+                                                <p><strong>Fecha de nacimiento Artista:</strong> {{artista.fecha_nacimiento_artista}} </p>
+                                                {% else %}
+                                                <p><strong>Fecha de nacimiento Artista:</strong> No definida por el solicitante </p>
+                                                {% endif %}
+                                                <p><strong>Biografía Artista:</strong> {{artista.biografia_artista}} </p>
+                                                {% if artista.imagen %}
+                                                <p><strong>Imagén Artista: </strong><img src="{{ artista.imagen_artista.url }}" alt="{{ artista.nombre_artista }}" style="max-width: 100%; height: auto;"></p>
+                                                {% else %}
+                                                <p><strong>Imagén Artista: </strong> No tiene </p>
+                                                {% endif %}
+                                                {% if not artista.sitio_web_artista|striptags or artista.sitio_web_artista is None %}
+                                                <p><strong>Sitio web Artista:</strong> No tiene </p>
+                                                {%else%}
+                                                <p><strong>Sitio web Artista:</strong> {{artista.sitio_web_artista}} </p>
+                                                {%endif%}
+                                            </div>
+                                
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <a href="{% url 'aprobar_solicitud-a' solicitud_id=artista.pk %}" class="btn btn-success">Aprobar</a>
+                                                <a href="{% url 'rechazar_solicitud-a' solicitud_id=artista.pk %}" class="btn btn-danger">Rechazar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="container mt-5 mb-5">
+                <h1 class="text-center">Estado de solicitudes de productos </h1>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <!-- Lista de solicitudes de productos -->
+                        <ul class="list-group mt-3" style="list-style: none;">
+                            {% for producto in listaP %}
+                            <input type="hidden" name="solicitud_id" value="{{ producto.pk }}">
+                                <li>
+                                    <a href="#" class="list-group-item d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#modalSolicitudP{{producto.pk}}">
+                                        #{{ producto.pk }} - {{ producto.nombre_producto }}
+                                        <span class="badge bg-success rounded-pill">Nuevo</span>
+                                    </a>
+                                </li>
+                                <!--MODAL-->
+                                <div class="modal" id="modalSolicitudP{{producto.pk}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Solicitud Producto #{{ producto.pk }} - {{ producto.nombre_producto }} </h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                <h5 class="mb-5">Detalles de la solicitud</h5>
+                                                <p><strong>Usuario:</strong> {{producto.usuario.username}} </p>
+                                                {%if producto.tipo_producto == 'cancion'%}
+                                                <p><strong>Sencillo:</strong> {{producto.nombre_producto}} </p>
+                                                {%elif producto.tipo_producto == 'album'%}
+                                                <p><strong>Álbum:</strong> {{producto.nombre_producto}} </p>
+                                                {%else%}
+                                                <p><strong>EP:</strong> {{producto.nombre_producto}} </p>
+                                                {%endif%}
+                                                <p><strong>Precio:</strong> {{producto.precio_producto}} </p>
+                                                {% if producto.imagen %}
+                                                <p><strong>Imagén Producto: </strong><img src="{{ producto.imagen_producto.url }}" alt="{{ producto.nombre_producto }}" style="max-width: 100%;"></p>
+                                                {% else %}
+                                                <p><strong>Imagén Producto: </strong>No tiene</p>
+                                                {% endif %}
+                                                <p><strong>Descripción:</strong> {{producto.descripcion_producto}} </p>
+                                            </div>
+                                
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <a href="{% url 'aprobar_solicitud-p' solicitud_id=producto.pk %}" class="btn btn-success">Aprobar</a>
+                                                <a href="{% url 'rechazar_solicitud-p' solicitud_id=producto.pk %}" class="btn btn-danger">Rechazar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block customfooter %}
+{% endblock %}

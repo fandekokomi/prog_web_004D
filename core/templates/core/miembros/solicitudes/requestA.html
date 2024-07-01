@@ -1,0 +1,36 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block titulo %}<title>Grupo Cero - Solicitud</title>{% endblock %}
+
+{% block navmenuver %}{% endblock %}
+
+{% block navbuscar %}{% endblock %}
+
+{% block navmenu %}{% endblock %}
+
+{% block navcarrito %}{% endblock %}
+
+{% block contenido %}
+<div class="container">
+    <a href="/miembros" class="btn btn-secondary mb-3"><i class="bi bi-arrow-left"></i> Volver al panel de miembros</a>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {% load crispy_forms_tags %}
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form | crispy}}
+                <input class="btn btn-success my-5" type="submit" value="Enviar">
+            </form>
+            {{ msj }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block customfooter %}
+{% endblock %}

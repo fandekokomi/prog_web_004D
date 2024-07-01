@@ -1,0 +1,70 @@
+{% extends "core/base.html" %}
+{% load static %}
+{%block titulo %}<title>Grupo Cero - Acerca de</title>{% endblock %}
+{% block contenido %}
+    <!-- Inicio del "Acerca de" -->
+    <!--Inicio contenedor-->
+    <div class="container mt-5">
+        <div class="row justify-content-md-center">
+            <div class="col-12 col-md-10 col-lg-8 text-center">
+                <h2 class="mb-4 display-5">Sobre Nosotros - Grupo Cero</h2>
+                <p class="text-secondary mb-5 lead fs-4">Desde nuestros humildes comienzos como una cooperativa de
+                    artistas plásticos, “Grupo Cero” ha evolucionado para convertirse en un crisol de creatividad y
+                    expresión artística. Nuestra pasión por la pintura, escultura y orfebrería nos llevó a crear un
+                    espacio único donde el arte y la comunidad se entrelazan.
+
+                    Con el tiempo, nuestra visión se expandió más allá de los lienzos y las esculturas, abrazando la
+                    vibrante escena musical de Japón. Hoy, “Grupo Cero” se reinventa como una plataforma dedicada a la
+                    música, con el objetivo de ser un puente cultural que une a los amantes de la música de todo el
+                    mundo.
+
+                    Nuestra web es un escaparate de talento, diversidad y pasión. Aquí, los sonidos tradicionales del
+                    enka se fusionan con el dinamismo del J-pop, el rock, el jazz y la electrónica, creando una
+                    experiencia auditiva sin igual. En “Grupo Cero”, celebramos la música que trasciende fronteras y
+                    conecta corazones.
+
+                    Bienvenidos a nuestro mundo, donde el arte se convierte en melodía.</p>
+                <hr class="w-50 mx-auto mb-5 border-dark-subtle">
+            </div>
+        </div>
+    </div>
+    <!--Final contenedor-->
+    <!-- Fin del "Acerca de" -->
+
+    <!-- Inicio del formulario de contacto -->
+    <section class="text-center mb-5 container">
+        <h2 class="text-center pt-4 mb-4 text-italic-roman">Contáctenos:</h2>
+        <form action="#" method="POST">
+            <div class="row justify-content-center">
+                <div class="col-8 col-sm-6 mb-3">
+                    <label for="nombre" class="form-label">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-8 col-sm-6 mb-3">
+                    <label for="correo" class="form-label">Correo electrónico:</label>
+                    <input type="email" class="form-control" id="correo" name="correo" required>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-8 col-sm-6 mb-3">
+                    <label for="asunto" class="form-label">Asunto:</label>
+                    <input type="text" class="form-control" id="asunto" name="asunto">
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-8 col-sm-6 mb-3">
+                    <label for="mensaje" class="form-label">Mensaje:</label>
+                    <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-8 col-sm-6">
+                    <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+                </div>
+            </div>
+        </form>
+    </section>
+    <!-- Fin del formulario de contacto -->
+{% endblock %}

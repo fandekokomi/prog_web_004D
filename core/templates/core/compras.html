@@ -1,0 +1,49 @@
+{% extends "core/base.html" %}
+
+{% block titulo %}<title>Historial de Pagos</title>{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h2 class="mb-4">Historial de Pagos</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID de compra</th>
+                    <th>Fecha de compra</th>
+                    <th>Método de pago</th>
+                    <th>Total en CLP</th>
+                    <th>Total en USD</th>
+                    <th>Productos comprados</th>
+                    <th>Voucher</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in compras_con_productos %}
+                <tr>
+                    <td>{{ item.compra.pk }}</td>
+                    <td>{{ item.compra.fecha_compra }}</td>
+                    <td>{{ item.compra.metodo_pago }}</td>
+                    <td>{{ item.compra.total_clp }}</td>
+                    <td>{{ item.compra.total_usd }}</td>
+                    <td>
+                        <ul>
+                            {% for producto_con_cantidad in item.productos_con_cantidades %}
+                                <li>{{ producto_con_cantidad.producto.titulo }} - Cantidad: {{ producto_con_cantidad.cantidad }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <a href="{% url 'generar_voucher' compra_id=item.compra.pk %}" class="btn btn-success">Generar Voucher</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No hay pagos registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

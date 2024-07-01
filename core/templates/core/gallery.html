@@ -1,0 +1,42 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block titulo %}<title>Grupo Cero - Galería</title>{% endblock %}
+{% block contenido %}
+    <section class="mb-5">
+        <section class="mb-5">
+            <div class="row justify-content-center m-5">
+                <h2 class="text-center my-5 fw-light"> <strong> GALERÍA</strong> </h2>
+                {% for producto in productos_all %}
+                <div class="col-md-4 col-sm-12">
+                    <div class="card h-100 border-0 mx-auto align-items-center mb-5">
+                        <img class="card-img-top img-thumbnail img-fluid" src="{{producto.imagen.url}}" alt="{{producto.titulo}}">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>            
+        </section>
+        <section class="mb-5">
+            <div class="pagination justify-content-center">
+                {% if productos_all.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ productos_all.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true"><i class="bi bi-arrow-left"></i></span>
+                    </a>
+                </li>
+                {% endif %}
+                {% for num in productos_all.paginator.page_range %}
+                <li class="page-item {% if productos_all.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if productos_all.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ productos_all.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true"><i class="bi bi-arrow-right"></i></span>
+                    </a>
+                </li>
+                {% endif %}
+            </div>
+        </section>
+    </section>
+{% endblock %}

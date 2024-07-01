@@ -1,0 +1,286 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{%block titulo %}<title>Grupo Cero - Productos</title>{% endblock %}
+{% block contenido %}
+    <section id="Discografia" class="mt-5">
+        <div class="text-center" id="titulodis">
+            <p class="h3"><strong>Productos</strong></p>
+            <p class="h5">Aquí puedes ver todo nuestro gran catálogo de Artistas y Colecciones.</p>
+        </div>
+        <div class="container">
+            <div id="artistas">
+                <!-- ARTISTAS-->
+                <section class="py-5 text-center container">
+                    <div class="row py-lg-5">
+                        <div class="col-lg-6 col-md-8 mx-auto">
+                            <h1 class="fw-light"><strong>Artistas</strong></h1>
+                        </div>
+                </section>
+                {% block artistas %}
+                <div class="album py-auto">
+                    <div class="container">
+                        <div class="row row-cols-1 row-cols-sm-4 row-cols-md-3 g-3">
+                            {% for artista in artistas %}
+                            <div class="col d-flex align-items-stretch">
+                                <div class="card shadow-sm">
+                                    {%if artista.imagen%}
+                                    <img class="card-img-top" src="{{ artista.imagen.url }}" alt="{{artista.nombre}}"
+                                        style="max-width: 100%;">
+                                    {%else%}
+                                    <img class="card-img-top" src="{% static 'core/img/artist_not_image.png'%}" alt="{{artista.nombre}}"
+                                        style="max-width: 100%;">
+                                    {%endif%}
+                                    <div class="card-text text-center mt-3">
+                                        <h4>{{ artista.nombre }}</h4>
+                                    </div>
+                                    <div class="card-body d-flex flex-column">
+                                        <div class="card-text flex-grow-1">
+                                            <p>{{artista.biografia_breve}}</p>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-end mt-3">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                    data-bs-toggle="modal" data-bs-target="#modalArtista{{artista.pk}}">Ver +</button>
+                                            </div>
+                                            <a href="{% url 'artista' artista_id=artista.pk %}" class="btn btn-outline-success">Ver Productos</a>
+                                            {% if not artista.sitio_web|striptags or artista.sitio_web is None %}
+                                            <!---->
+                                            {%else%}
+                                            <a href="{{artista.sitio_web}}" class="btn btn-sm btn-outline-info">Sitio web</a>
+                                            {%endif%}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- MODAL ARTISTA-->
+                            <div class="modal fade" id="modalArtista{{artista.pk}}" tabindex="-1"
+                                aria-labelledby="modalArtista{{artista.pk}}Label" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalArtista{{artista.pk}}Label">{{artista.nombre}}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                {%if artista.imagen%}
+                                                <img class="card-img-top" src="{{ artista.imagen.url }}" alt="{{artista.nombre}}"
+                                                    style="max-width: 100%;">
+                                                {%else%}
+                                                <img class="card-img-top" src="{% static 'core/img/artist_not_image.png'%}" alt="{{artista.nombre}}"
+                                                    style="max-width: 100%;">
+                                                {%endif%}
+                                            </div>
+                                            {%if artista.fecha_nacimiento%}
+                                            <p><strong>Fecha de nacimiento: </strong>{{artista.fecha_nacimiento}}</p>
+                                            {%else%}
+                                            <p class="text-danger"><strong>Fecha de nacimiento: </strong>No tiene</p>
+                                            {%endif%}
+                                            <p class="my-5"><strong>Biografía: </strong>{{artista.biografia}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+            <div id="sencillos">
+                <section class="py-5 text-center container">
+                    <div class="row py-lg-5">
+                        <div class="col-lg-6 col-md-8 mx-auto">
+                            <h1 class="fw-light"><strong>Sencillos</strong></h1>
+                        </div>
+                </section>
+                {% block sencillos %}
+                <div class="album py-auto">
+                    <div class="container">
+                        <div class="row row-cols-1 row-cols-sm-4 row-cols-md-3 g-3">
+                            {% for producto in productos_sencillos %}
+                            <div class="col d-flex align-items-stretch">
+                                <div class="card shadow-sm">
+                                    <img class="card-img-top" src="{{ producto.imagen.url }}" alt="{{producto.titulo}}"
+                                        style="max-width: 100%;">
+                                    <div class="card-text text-center mt-3">
+                                        <h4>{{ producto.titulo }}</h4>
+                                    </div>
+                                    <div class="card-body d-flex flex-column">
+                                        <div class="card-text flex-grow-1">
+                                            <p>{{producto.descripcion_breve}}</p>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-end">
+                                            <div class="btn-group mt-3">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#modalProducto{{producto.pk}}">Ver +</button>
+                                                    <a type="button" class="btn btn-sm btn-outline-secondary ms-2" href="{% url 'carritoadd' producto_id=producto.pk %}">Agregar al carrito</a>
+                                            </div>
+                                            <div>
+                                                <p class="text-muted m-auto">{{producto.precio_clp}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- MODAL PRODUCTO-->
+                            <div class="modal fade" id="modalProducto{{producto.pk}}" tabindex="-1"
+                                aria-labelledby="modalProducto{{producto.pk}}Label" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalProducto{{producto.pk}}Label">{{producto.titulo}}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {%if producto.artista.imagen %}
+                                            <p class="mt-3"><strong>Artista: </strong><img src="{{producto.artista.imagen.url}}" alt="" class="img-thumbnail rounded-circle" style="max-width: 10%; max-height: auto;"> {{producto.artista.nombre}} </p>
+                                            {%else%}
+                                            <p class="mt-3"><strong>Artista: </strong><img src="{% static 'core/img/artist_not_image.png'%}" alt="" class="img-thumbnail rounded-circle" style="max-width: 10%; max-height: auto;"> {{producto.artista.nombre}} </p>
+                                            {%endif%}
+                                            <div class="text-center">
+                                                <img src="{{producto.imagen.url}}" alt="{{producto.titulo}}" class="img-fluid"
+                                                    style="max-width: 100%;">
+                                            </div>
+                                            <p class="text-center mt-3"><strong>Descripción: </strong>{{producto.obtener_descripcion_formateada|safe}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+            <div id="albums">
+            {% block albums %}
+            <section class="py-5 text-center container">
+                <div class="row py-lg-5">
+                    <div class="col-lg-6 col-md-8 mx-auto">
+                        <h1 class="fw-light"><strong>Álbums</strong></h1>
+                    </div>
+            </section>
+            <div class="album py-auto">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-sm-4 row-cols-md-3 g-3">
+                        {% for producto in productos_albums%}
+                        <div class="col d-flex align-items-stretch">
+                            <div class="card shadow-sm">
+                                <img class="card-img-top" src="{{ producto.imagen.url }}" alt="{{producto.titulo}}"
+                                    style="max-width: 100%;">
+                                <div class="card-text text-center mt-3">
+                                    <h4>{{ producto.titulo }}</h4>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <div class="card-text flex-grow-1">
+                                        <p>{{producto.descripcion_breve}}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <div class="btn-group mt-3">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                                data-bs-target="#modalProducto{{producto.pk}}">Ver +</button>
+                                                <a type="button" class="btn btn-sm btn-outline-secondary ms-2" href="{% url 'carritoadd' producto_id=producto.pk %}">Agregar al carrito</a>
+                                        </div>
+                                        <div>
+                                            <p class="text-muted m-auto">{{producto.precio_clp}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- MODAL PRODUCTO-->
+                        <div class="modal fade" id="modalProducto{{producto.pk}}" tabindex="-1"
+                            aria-labelledby="modalProducto{{producto.pk}}Label" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalProducto{{producto.pk}}Label">{{producto.titulo}}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="text-center mt-3"><strong>Artista: </strong>{{producto.artista.nombre}}</p>
+                                        <div class="text-center">
+                                            <img src="{{producto.imagen.url}}" alt="{{producto.titulo}}" class="img-fluid"
+                                                style="max-width: 100%;">
+                                        </div>
+                                        <p class="text-center mt-3"><strong>Descripción: </strong>{{producto.obtener_descripcion_formateada|safe}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+            </div>
+            <div id="eps" class="mb-5">
+                <section class="py-5 text-center container">
+                    <div class="row py-lg-5">
+                        <div class="col-lg-6 col-md-8 mx-auto">
+                            <h1 class="fw-light"><strong>EPS</strong></h1>
+                        </div>
+                </section>
+                {% block eps %}
+                <div class="album py-auto">
+                    <div class="container">
+                        <div class="row row-cols-1 row-cols-sm-4 row-cols-md-3 g-3">
+                            {% for producto in productos_eps %}
+                            <div class="col d-flex align-items-stretch">
+                                <div class="card shadow-sm">
+                                    <img class="card-img-top" src="{{ producto.imagen.url }}" alt="{{producto.titulo}}"
+                                        style="max-width: 100%;">
+                                    <div class="card-text text-center mt-3">
+                                        <h4>{{ producto.titulo }}</h4>
+                                    </div>
+                                    <div class="card-body d-flex flex-column">
+                                        <div class="card-text flex-grow-1">
+                                            <p>{{producto.descripcion_breve}}</p>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-end">
+                                            <div class="btn-group mt-3">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#modalProducto{{producto.pk}}">Ver +</button>
+                                                    <a type="button" class="btn btn-sm btn-outline-secondary ms-2" href="{% url 'carritoadd' producto_id=producto.pk %}">Agregar al carrito</a>
+                                            </div>
+                                            <div>
+                                                <p class="text-muted m-auto">{{producto.precio_clp}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- MODAL PRODUCTO-->
+                            <div class="modal fade" id="modalProducto{{producto.pk}}" tabindex="-1"
+                                aria-labelledby="modalProducto{{producto.pk}}Label" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalProducto{{producto.pk}}Label">{{producto.titulo}}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-center mt-3"><strong>Artista: </strong>{{producto.artista.nombre}}</p>
+                                            <div class="text-center">
+                                                <img src="{{producto.imagen.url}}" alt="{{producto.titulo}}" class="img-fluid"
+                                                    style="max-width: 100%;">
+                                            </div>
+                                            <p class="text-center mt-3"><strong>Descripción: </strong>{{producto.obtener_descripcion_formateada|safe}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+{% endblock %}
+
+
+

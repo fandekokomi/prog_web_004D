@@ -1,0 +1,52 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block titulo %}<title>Grupo Cero - Aprobar solicitud</title>{% endblock %}
+
+{% block navmenuver %}{% endblock %}
+
+{% block navbuscar %}{% endblock %}
+
+{% block navmenu %}{% endblock %}
+
+{% block navcarrito %}{% endblock %}
+
+{% block contenido %}
+<div class="container">
+    <div class="row text-center justify-content-center">
+        <div class="col-md-6">
+            <h1>Detalles de la Solicitud #{{solicitud.pk}}</h1>
+            <div class="container my-5">
+                <p class="h5"><strong>Solicitante:</strong> {{solicitud.usuario.username}}</p>
+                {% if solicitud.imagen_artista %}
+                <p class="h5"><strong>Imágen Artista:</strong> <img src="{{solicitud.imagen_artista.url}}" alt="{{solicitud.nombre_artista}}" style="max-width: 100%;"> </p>
+                {% else %}
+                <p class="h5"><strong>Imágen Artista:</strong> No tiene</p>
+                {% endif %}
+                <p class="h5"><strong>Nombre del Artista:</strong> {{ solicitud.nombre_artista }}</p>
+                <p class="h5"><strong>Fecha de Nacimiento:</strong> {{ solicitud.fecha_nacimiento_artista }}</p>
+                {% if not solicitud.sitio_web_artista|striptags or solicitud.sitio_web_artista is None %}
+                <p class="h5"><strong>Sitio web Artista:</strong> No tiene </p>
+                {%else%}
+                <p class="h5"><strong>Sitio Web:</strong> <a href="{{ solicitud.sitio_web_artista }}">{{ solicitud.sitio_web_artista }}</a></p>
+                {%endif%}
+                <p class="h5"><strong>Biografía:</strong> {{ solicitud.biografia_artista }} </p>
+                <h2 class="mt-5">¿Aprobar Solicitud #{{solicitud.pk}}?</h2>
+                {% load crispy_forms_tags %}
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <input class="btn btn-success my-5" type="submit" value="Aprobar">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block customfooter %}
+{% endblock %}

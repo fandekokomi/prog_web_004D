@@ -1,0 +1,37 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block titulo %}<title>Grupo Cero - Agregar Artista</title>{% endblock %}
+
+{% block navmenuver %}{% endblock %}
+
+{% block navbuscar %}{% endblock %}
+
+{% block navmenu %}{% endblock %}
+
+{% block navcarrito %}{% endblock %}
+
+{% block contenido %}
+<div class="container">
+    <div class="row text-center justify-content-center">
+        <div class="col-md-6">
+            <a href="{% url 'administradores' %}" class="btn btn-secondary mb-3"><i class="bi bi-arrow-left"></i> Volver al panel de administradores</a>
+            <div class="container my-5">
+                {% load crispy_forms_tags %}
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <input class="btn btn-success my-5" type="submit" value="Agregar">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block customfooter %}
+{% endblock %}

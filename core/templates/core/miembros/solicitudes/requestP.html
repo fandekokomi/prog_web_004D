@@ -1,0 +1,94 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block titulo %}<title>Grupo Cero - Solicitud</title>{% endblock %}
+
+{% block navmenuver %}{% endblock %}
+
+{% block navbuscar %}{% endblock %}
+
+{% block navmenu %}{% endblock %}
+
+{% block navcarrito %}{% endblock %}
+
+{% block contenido %}
+<!-- Form SOLICITUD-->
+<!--<div class="mt-5 mb-5 p-5 rounded text-justify container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="#" class="form-register" method="post" enctype="multipart/form-data">
+
+                <h1 class="form-title text-center pt-5 pb-4">Solicitud</h1>
+                <p style="font-family: sans-serif;" class="text-secondary">Por favor, completa el siguiente
+                    formulario para enviar el producto a revisión.</p>
+                <div class="mb-3">
+                    <label for="tecnica" class="form-label" style="font-family: sans-serif;">Nombre Artista:</label>
+                    <input type="text" class="form-control" id="tecnica" name="tecnica" required>
+                </div>
+                <div class="mb-3">
+                    <label for="tecnica" class="form-label" style="font-family: sans-serif;">Fecha de nacimiento del Artista:</label>
+                    <input type="text" class="form-control" id="tecnica" name="tecnica">
+                </div>
+                <div class="mb-3">
+                    <label for="tecnica" class="form-label" style="font-family: sans-serif;">Biografia del artista:</label>
+                    <input type="text" class="form-control" id="tecnica" name="tecnica" required>
+                </div>
+                <div class="mb-3">
+                    <label for="archivo" class="form-label" style="font-family: sans-serif;">Imagen del
+                        artista:</label>
+                    <input type="file" class="form-control" id="archivo" name="archivo" required>
+                    <small class="form-text text-muted">Selecciona una imagen de alta calidad del Artista.</small>
+                </div>
+                <div class="mb-3">
+                    <label for="tecnica" class="form-label" style="font-family: sans-serif;">Sitio web del artista:</label>
+                    <input type="text" class="form-control" id="tecnica" name="tecnica" required>
+                </div>
+                <div class="mb-3">
+                    <label for="titulo" class="form-label" style="font-family: sans-serif;">Nombre producto:</label>
+                    <input type="text" class="form-control" id="titulo" name="titulo" required>
+                </div>
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label"
+                        style="font-family: sans-serif;">Descripción del producto:</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="archivo" class="form-label" style="font-family: sans-serif;">Imagen del
+                        producto:</label>
+                    <input type="file" class="form-control" id="archivo" name="archivo" required>
+                    <small class="form-text text-muted">Selecciona una imagen de alta calidad que represente tu
+                        canción/álbum/ep.</small>
+                </div>
+                <div class="mb-3">
+                    <label for="precio" class="form-label" style="font-family: sans-serif;">Precio del producto:</label>
+                    <input type="number" class="form-control" id="precio" name="precio" required>
+                </div>
+                <div class="text-center mt-5">
+                    <
+                </div>
+            </form>
+        </div>
+    </div>
+</div>-->
+<div class="container">
+    <a href="/miembros" class="btn btn-secondary mb-3"><i class="bi bi-arrow-left"></i> Volver al panel de miembros</a>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {% load crispy_forms_tags %}
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form | crispy}}
+                <input class="btn btn-success my-5" type="submit" value="Enviar">
+            </form>
+            {{ msj }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block customfooter %}
+{% endblock %}

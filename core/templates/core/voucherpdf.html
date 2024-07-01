@@ -1,0 +1,78 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block titulo %}<title>Grupo Cero - Voucher de Compra</title>{% endblock %}
+
+{% block logomenuver %}{% endblock %}
+
+{% block navmenuver %}{% endblock %}
+
+{% block navbuscar %}{% endblock %}
+
+{% block navmenu %}{% endblock %}
+
+{% block menuvertical %}{% endblock %}
+
+{% block navlogin %}{% endblock %}
+
+{% block navcarrito %}{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h1 class="text-center">Voucher de compra #{{ compra.pk }}</h1>
+    <div class="row mt-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Detalles de la compra</h4>
+                    <p class="card-text"><strong>Usuario: </strong>{{ compra.usuario.username }}</p>
+                    <p class="card-text"><strong>Fecha de compra: </strong>{{ compra.fecha_compra }}</p>
+                    <p class="card-text"><strong>Método de pago: </strong>{{ compra.metodo_pago }}</p>
+                    <p class="card-text"><strong>Total en CLP: </strong>{{ compra.total_clp }}</p>
+                    <p class="card-text"><strong>Total en USD: </strong>{{ compra.total_usd }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Productos comprados</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Imagen</th>
+                                    <th scope="col">Título</th>
+                                    <th scope="col">Artista</th>
+                                    <th scope="col">Descripción breve</th>
+                                    <th scope="col">Precio CLP</th>
+                                    <th scope="col">Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in productos_con_cantidades %}
+                                <tr class="text-center">
+                                    <td><img src="{{ item.producto.imagen.url }}" alt="{{ item.producto.titulo }}" class="img-fluid" style="max-width: 100px;"></td>
+                                    <td>{{ item.producto.titulo }}</td>
+                                    <td>{{ item.producto.artista.nombre }}</td>
+                                    <td>{{ item.producto.descripcion_breve }}</td>
+                                    <td>{{ item.producto.precio_clp }}</td>
+                                    <td>{{ item.cantidad }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modals %}{% endblock %}
+
+{% block customfooter %}{% endblock %}

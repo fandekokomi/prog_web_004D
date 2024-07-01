@@ -1,0 +1,39 @@
+.linkcustom:hover {
+    outline: 2px solid #0d6efd;
+}
+
+.offcanvas {
+    max-width: 200px;
+}
+
+.pagination {
+    --bs-pagination-color: #198754;
+    --bs-pagination-hover-color: #fff;
+    --bs-pagination-active-color: #fff;
+    --bs-pagination-active-border-color: #198754;
+    --bs-pagination-active-bg: #198754;
+    --bs-pagination-hover-bg: #376e37;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+  
+footer {
+margin-top: auto;
+}
+
+.modal-body svg {
+    width: 60px; /* Tamaño del ícono */
+    height: 60px;
+}
+
+.modal-body h4 {
+    margin-top: 1rem;
+}
+
+.modal-body .btn {
+    margin-top: 1rem;
+}

@@ -1,0 +1,1 @@
+from libs.multi_captcha_admin.settings import *

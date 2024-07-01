@@ -1,0 +1,58 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block titulo %}<title>Grupo Cero - Artistas (API)</title>{% endblock %}
+{% block contenido %}
+<!-- Inicio de la sección para artistas -->
+<section class="mb-5" id="artistas">
+    <div class="container">
+        <h2 class="text-center my-4" style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
+            <strong>LastFM Top Artistas Japoneses</strong>
+        </h2>
+
+        <!-- Tabla de artistas -->
+        <div class="table-responsive">
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for artista in page_obj %}
+                    <tr>
+                        <td>{{ artista.nombre }}</td>
+                        <td><a href="{{ artista.url }}" target="_blank" class="btn btn-success">Ver perfil</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        <div class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true"><i class="bi bi-arrow-left"></i></span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true"><i class="bi bi-arrow-right"></i></span>
+                </a>
+            </li>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

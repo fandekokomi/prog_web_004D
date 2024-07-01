@@ -1,0 +1,53 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block titulo %}<title>Grupo Cero - Inicio de sesión</title>{% endblock %}
+
+{% block navmenuver %}{% endblock %}
+
+{% block navbuscar %}{% endblock %}
+
+{% block navmenu %}{% endblock %}
+
+{% block navlogin %}
+
+{% endblock %}
+
+{% block navcarrito %}{% endblock %}
+
+{% block contenido %}
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100 text-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <h3>Registro</h3>
+          <div class="card" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+              <div class="mb-md-5 mt-md-4 pb-5">
+                {% load crispy_forms_tags %}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{form | crispy}}
+                    <input type="submit" value="Registrarse" class="btn btn-success mt-5">
+                </form>
+              </div>
+  
+              <div>
+                <p class="mb-0">¿Ya tiene una cuenta? <a href="{% url 'login' %}" class="fw-bold">Iniciar sesión</a>
+                </p>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block customfooter %}
+{% endblock %}

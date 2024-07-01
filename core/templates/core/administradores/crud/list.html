@@ -1,0 +1,241 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+{% block titulo %}<title>Grupo Cero - Panel de administradores</title>{% endblock %}
+
+{% block navmenuver %}{% endblock %}
+
+{% block navbuscar %}{% endblock %}
+
+{% block navmenu %}{% endblock %}
+
+{% block navcarrito %}{% endblock %}
+
+{% block contenido %}
+<div class="container d-flex justify-content-center">
+    <section class="my-5">
+        <h1>Listado de artistas</h1>
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th class="text-center">Habilitado</th>
+                        <th class="text-center">Código artista</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Fecha de nacimiento</th>
+                        <th class="text-center">Imágen</th>
+                        <th class="text-center">Sitio Web</th>
+                        <th class="text-center">Detalles</th>
+                        <th class="text-center">Editar</th>
+                        <th class="text-center">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for artista in artistas %}
+                    <tr>
+                        <td class="text-center">
+                            <button class="btn btn-{% if artista.habilitado %}success{% else %}danger{% endif %} toggle-artista" data-id={{artista.pk}}>{% if artista.habilitado %}Habilitado{% else %}Deshabilitado{% endif %}</button>
+                        </td>
+                        <td class="text-center">{{ artista.pk }}</td>
+                        <td class="text-center">{{ artista.nombre }}</td>
+                        {%if artista.fecha_nacimiento%}
+                        <td class="text-center">{{ artista.fecha_nacimiento }}</td>
+                        {%else%}
+                        <td class="text-center text-danger">No especificada</td>
+                        {%endif%}
+                        {%if artista.imagen%}
+                        <td class="text-center">{{ artista.nombreimagen }}</td>
+                        {%else%}
+                        <td class="text-center text-danger"> No tiene imágen </td>
+                        {%endif%}
+                        {%if artista.sitio_web%}
+                        <td class="text-center">{{ artista.sitio_web }}</td>
+                        {%else%}
+                        <td class="text-center text-danger">No tiene</td>
+                        {%endif%}
+                        <td class="text-center">
+                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#detalleModalArtista{{ artista.pk }}">Ver +</button>
+                            <div class="modal fade" id="detalleModalArtista{{ artista.pk }}" tabindex="-1"
+                                aria-labelledby="detalleModal{{ artista.pk }}Label" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="detalleModalArtista{{ artista.pk }}Label">{{ artista.nombre }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <p><strong>Nombre: </strong>{{artista.nombre}}</p>
+                                            {%if artista.imagen%}
+                                            <p><strong>Imagen: </strong></p>
+                                            <p><img src="{{ artista.imagen.url }}"
+                                                    alt="{{ artista.nombre }}" class="img-fluid"></p>
+                                            <button type="button" class="btn btn-warning mb-3 eliminar_imagen_artista" data-id="{{ artista.pk }}">Eliminar imágen</button>
+                                            {%else%}
+                                            <p class="text-danger"><strong>Imagen: </strong>No establecida</p>
+                                            {%endif%}
+                                            {%if artista.fecha_nacimiento%}
+                                            <p><strong>Fecha de nacimiento: </strong>{{ artista.fecha_nacimiento }}</p>
+                                            {%else%}
+                                            <p class="text-danger"><strong>Fecha de nacimiento:</strong> No especificada
+                                            </p>
+                                            {%endif%}
+                                            {%if artista.sitio_web %}
+                                            <p><strong>Sitio Web: </strong>{{ artista.sitio_web }}</p>
+                                            {%else%}
+                                            <p class="text-danger"><strong>Sitio Web: </strong> No tiene </p>
+                                            {%endif%}
+                                            {% if artista.biografia %}
+                                            <p><strong>Biografía: </strong></p>
+                                            <p>{{ artista.biografia }}</p>
+                                            {% else %}
+                                            <p><strong>Biografía: </strong></p>
+                                            <p class="text-danger">No posee biografía</p>
+                                            {%endif%}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <a href="{% url 'editar_artista' artista_id=artista.pk%}" class="btn btn-warning mx-2">Editar</a>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-danger mx-2 eliminar-artista" data-url="{% url 'eliminar_artista' artista_id=artista.pk %}">Eliminar</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+<div class="container d-flex justify-content-center">
+    <section class="my-5">
+        <h1>Listado de productos</h1>
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th class="text-center">Habilitado</th>
+                        <th class="text-center">Código producto</th>
+                        <th class="text-center">Título</th>
+                        <th class="text-center">Artista</th>
+                        <th class="text-center">Precio</th>
+                        <th class="text-center">Imagen</th>
+                        <th class="text-center">Detalles</th>
+                        <th class="text-center">Editar</th>
+                        <th class="text-center">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td class="text-center">
+                            <button class="btn btn-{% if producto.habilitado %}success{% else %}danger{% endif %} toggle-producto" data-id="{{producto.pk}}">{% if producto.habilitado %}Habilitado{% else %}Deshabilitado{% endif %}</button>
+                        </td>
+                        <td class="text-center">{{ producto.pk }}</td>
+                        <td class="text-center">{{ producto.titulo }}</td>
+                        <td class="text-center">{{ producto.artista.nombre }}</td>
+                        <td class="text-center">{{ producto.precio_clp }}</td>
+                        <td class="text-center">{{ producto.nombreimagen }}</td>
+                        <td class="text-center">
+                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#detalleModalProducto{{ producto.pk }}">Ver +</button>
+                            <div class="modal fade" id="detalleModalProducto{{ producto.pk }}" tabindex="-1"
+                                aria-labelledby="detalleModal{{ producto.pk }}Label" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="detalleModalProducto{{ producto.pk }}Label">{{ producto.titulo }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <h5 class="my-3"><strong>Precio: </strong> {{ producto.precio_clp }}</h5>
+                                            {% if producto.imagen %}
+                                            <p><strong>Imágen: </strong> <img src="{{producto.imagen.url}}"
+                                                alt="{{producto.titulo}}" class="img-fluid"></p>
+                                            {% else %}
+                                            <p><strong>Imágen: </strong>No tiene</p>
+                                            {% endif %}
+                                            <p><strong>Descripción: </strong></p>
+                                            <p>{{ producto.obtener_descripcion_formateada|safe }}</p>
+                                            <p><strong>Artista: </strong>{{ producto.artista.nombre }}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <a href="{% url 'editar_producto' producto_id=producto.pk%}" class="btn btn-warning mx-2">Editar</a>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-danger mx-2 eliminar-producto" data-url="{% url 'eliminar_producto' producto_id=producto.pk %}">Eliminar</button>
+                        </td>                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<div class="container d-flex justify-content-center">
+    <section class="my-5">
+        <h1>Listado de Miembros de la cooperativa</h1>
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th class="text-center">Activo</th>
+                        <th class="text-center">Código usuario</th>
+                        <th class="text-center">Nombre usuario</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Editar</th>
+                        <th class="text-center">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for miembro in miembros %}
+                    <tr>
+                        <td class="text-center">
+                            <button class="btn btn-{% if miembro.is_active %}success{% else %}danger{% endif %} toggle-miembro" data-id="{{miembro.pk}}">{% if miembro.is_active %}Habilitado{% else %}Deshabilitado{% endif %}</button>
+                        </td>
+                        <td class="text-center">{{miembro.pk}}</td>
+                        <td class="text-center">{{miembro.username}}</td>
+                        {% if miembro.email %}
+                        <td class="text-center">{{miembro.email}}</td>
+                        {% else %}
+                        <td class="text-center text-danger">No especificado</td>
+                        {% endif %}
+                        <td class="text-center">
+                            <a href="{% url 'editar_miembro' miembro_id=miembro.pk%}" class="btn btn-warning mx-2">Editar contraseña</a>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-danger mx-2 eliminar-miembro" data-url="{% url 'eliminar_miembro' miembro_id=miembro.pk %}">Eliminar</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block customfooter %}
+{% endblock %}

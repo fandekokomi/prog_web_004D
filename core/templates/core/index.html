@@ -1,0 +1,293 @@
+{% extends "core/base.html" %}
+{% load static %}
+{%block titulo %}<title>Grupo Cero - Inicio</title>{% endblock %}
+{% block contenido %}
+<!-- Carrusel -->
+<div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+    <!-- Indicators/dots -->
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+    </div>
+
+    <!-- The slideshow/carousel -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#modalfoto1"><img
+                    src="https://i.imgur.com/saQlTVz.jpeg"
+                    alt="Suzuko Mimori" class="d-block w-100"></a>
+        </div>
+        <div class="carousel-item">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#modalfoto2"><img
+                    src="https://i.imgur.com/by0qtdL.jpeg"
+                    alt="Akari Kitō" class="d-block w-100"></a>
+        </div>
+        <div class="carousel-item">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#modalfoto3"><img
+                    src="https://i.imgur.com/bBYoJNG.jpeg"
+                    alt="Tomori Kusunoki" class="d-block w-100"></a>
+        </div>
+    </div>
+
+    <!-- Left and right controls/icons -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+<!--Fin carrusel-->
+
+    <!--Inicio modals para el carrusel-->
+    <!--Modal foto 1-->
+    <div class="modal fade" id="modalfoto1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">{{modal_mimori.titulo}}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>{{modal_mimori.descripcion}}</p>
+                    <section class="mb-5">
+                        <div class="card h-100 border-0 mx-auto align-items-center mb-5">
+                            <img class="card-img-top" src="{{modal_mimori.imagen.url}}" alt="{{modal_mimori.titulo}}">
+                        </div>
+                        <div class="text-center pt-0 pb-0">
+                            <a href="{% url 'artista' artista_id=modal_mimori.artista.pk %}" class="btn btn-outline-danger">Más información del
+                                artista</a>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin del modal foto 1-->
+    <!--Modal foto 2-->
+    <div class="modal fade" id="modalfoto2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">{{modal_akari.titulo}}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>{{modal_akari.descripcion}}</p>
+                    <!--INICIO SECCIÓN GALERÍA-->
+                    <section class="mb-5">
+                        <div class="card h-100 border-0 mx-auto align-items-center mb-5">
+                            <img class="card-img-top"
+                                src="{{modal_akari.imagen.url}}"
+                                alt="{{modal_akari.titulo}}">
+                        </div>
+                        <div class="text-center pt-0 pb-0">
+                            <a href="{% url 'artista' artista_id=modal_akari.artista.pk %}" class="btn btn-outline-danger">Más información del
+                                artista</a>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin del modal foto 2-->
+    <!--Modal foto 3-->
+    <div class="modal fade" id="modalfoto3">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">{{modal_tomori.titulo}}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>{{modal_tomori.descripcion}}</p>
+                    <!--INICIO SECCIÓN GALERÍA-->
+                    <section class="mb-5">
+                        <div class="card h-100 border-0 mx-auto align-items-center mb-5">
+                            <img class="card-img-top"
+                                src="{{modal_tomori.imagen.url}}"
+                                alt="{{modal_tomori.titulo}}">
+                        </div>
+                        <div class="text-center pt-0 pb-0">
+                            <a href="{% url 'artista' artista_id=modal_tomori.artista.pk %}" class="btn btn-outline-danger">Más información del
+                                artista</a>
+                        </div>
+                    </section>
+                    <!--FINAL SECCIÓN GALERÍA-->
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin del modal foto 3-->
+    <!--Fin del modal carrusel-->
+{% block albums %}
+<!--INICIO ALBUMS-->
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Discografía</h1>
+            <p class="lead text-muted">En el Grupo Cero, la música no es solo un producto; es una extensión de nuestra
+                alma colectiva. Te invitamos a explorar, escuchar y dejarte llevar por la corriente creativa que nos
+                une.</p>
+        </div>
+    </div>
+</section>
+
+<div class="album py-auto">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-4 row-cols-md-3 g-3">
+            {% for producto in productos_albums|slice:":3" %}
+            <div class="col d-flex align-items-stretch">
+                <div class="card shadow-sm">
+                    <img class="card-img-top" src="{{ producto.imagen.url }}" alt="{{producto.titulo}}"
+                        style="max-width: 100%;">
+                    <div class="card-text text-center mt-3">
+                        <h4>{{ producto.titulo }}</h4>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div class="card-text flex-grow-1">
+                            <p>{{producto.descripcion_breve}}</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <div class="btn-group mt-3">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#modalProducto{{producto.pk}}">Ver +</button>
+                                <a type="button" class="btn btn-sm btn-outline-secondary ms-2" href="{% url 'carritoadd' producto_id=producto.pk %}">Agregar al carrito</a>
+                            </div>
+                            <div>
+                                <p class="text-muted m-auto">{{producto.precio_clp}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MODAL PRODUCTO-->
+            <div class="modal fade" id="modalProducto{{producto.pk}}" tabindex="-1"
+                aria-labelledby="modalProducto{{producto.pk}}Label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalProducto{{producto.pk}}Label">{{producto.titulo}}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <img src="{{producto.imagen.url}}" alt="{{producto.titulo}}" class="img-fluid"
+                                    style="max-width: 100%;">
+                            </div>
+                            <p class="text-center mt-3"><strong>Descripción: </strong>{{producto.obtener_descripcion_formateada|safe}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="text-center pt-5 pb-5">
+    <a href="{%url 'productos'%}" class="btn btn-outline-success">Ver más colecciones</a>
+</div>
+{% endblock %}
+<!--INICIO ARTISTAS-->
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Artistas</h1>
+            <p class="lead text-muted">Explora la galería donde la música y las artes visuales se fusionan. Cada
+                artista presenta una muestra de su trabajo, ofreciendo una ventana a su mundo. Aquí, la música se
+                convierte en color, forma y textura, y las obras visuales se transforman en partituras de emociones.
+            </p>
+        </div>
+    </div>
+    {% block artistas %}
+    <div class="album py-auto">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-4 row-cols-md-3 g-3">
+                {% for artista in artistas|slice:":3" %}
+                <div class="col d-flex align-items-stretch">
+                    <div class="card shadow-sm">
+                        <img class="card-img-top" src="{{ artista.imagen.url }}" alt="{{artista.nombre}}"
+                            style="max-width: 100%;">
+                        <div class="card-text text-center mt-3">
+                            <h4>{{ artista.nombre }}</h4>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <div class="card-text flex-grow-1">
+                                <p>{{artista.biografia_breve}}</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-end mt-3">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        data-bs-toggle="modal" data-bs-target="#modalArtista{{artista.pk}}">Ver +</button>
+                                </div>
+                                {% if not artista.sitio_web|striptags or artista.sitio_web is None %}
+                                <!---->
+                                {%else%}
+                                <a href="{{artista.sitio_web}}" class="btn btn-sm btn-outline-info">Sitio web</a>
+                                {%endif%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- MODAL ARTISTA-->
+                <div class="modal fade" id="modalArtista{{artista.pk}}" tabindex="-1"
+                    aria-labelledby="modalArtista{{artista.pk}}Label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalArtista{{artista.pk}}Label">{{artista.nombre}}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center">
+                                    <img src="{{artista.imagen.url}}" alt="{{artista.nombre}}" class="img-fluid"
+                                        style="max-width: 100%;">
+                                </div>
+                                <p><strong>Fecha de nacimiento: </strong>{{artista.fecha_nacimiento}}</p>
+                                <p class="my-5"><strong>Biografía: </strong>{{artista.biografia}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endblock artistas %}
+    <div class="text-center pt-5 pb-5">
+        <a href="/productos#artistas" class="btn btn-outline-success">Ver más artistas</a>
+    </div>
+</section>
+<!--FINAL ARTISTAS-->
+{% endblock %}
