@@ -49,7 +49,7 @@
                             src="{% static 'core/img/main_logo.jpg' %}" alt="LOGO" style="width: 50px;"></a> <!-- Link con el logo de la cooperativa -->
                     {% elif user.tipo_usuario.nom_tipo == 'admin' %}
                         {% if user.is_staff or user.is_superuser %}
-                            <a class="navbar-brand d-flex w-0 me-auto" href="admin/"><img class="rounded-pill"
+                            <a class="navbar-brand d-flex w-0 me-auto" href="{% url 'admin:index' %}"><img class="rounded-pill"
                                 src="{% static 'core/img/main_logo.jpg' %}" alt="LOGO" style="width: 50px;"></a> <!-- Link con el logo de la cooperativa -->
                         {% else %}
                             <a class="navbar-brand d-flex w-0 me-auto" href="{% url 'administradores' %}"><img class="rounded-pill"
@@ -139,7 +139,7 @@
                                 <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown">Superadmin {{user.username}}</a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="/admin/">Panel de admin django</a>
+                                        <a class="dropdown-item" href="{% url 'admin:index' %}">Panel de admin django</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="{% url 'index' %}">Página de inicio</a>
